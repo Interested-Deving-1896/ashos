@@ -1,5 +1,5 @@
 # Minimal CI — upstream tracking mirror of github.com/ashos/ashos
-# Runs on push, schedule, and manual trigger.
+# Runs on push to main, merge requests, schedule, and manual trigger.
 
 stages:
   - info
@@ -16,8 +16,7 @@ upstream-info:
     - echo "Author: $CI_COMMIT_AUTHOR"
     - echo "Timestamp: $CI_COMMIT_TIMESTAMP"
   rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_PIPELINE_SOURCE == "push"'
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
     - if: '$CI_PIPELINE_SOURCE == "web"'
-    - when: manual
-      allow_failure: true
